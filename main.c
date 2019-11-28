@@ -42,9 +42,31 @@ void	print_rand(t_printf *p)
 {
 	char	test;
 	if ((test = ft_strchri(*p->str, "# +-0*")))
-		ft_parse_optionals();
+		ft_parse_optionals(*p, test);
 	if ((test = ft_strchri(*p->str, "")))
 		printf("\n\n", *p->str);
+}
+
+void	parse_optionals(t_printf *p, char test)
+{
+	if (test == '#')
+		p->mask |= F_SHARP;
+	if (test == ' ')
+		p->mask |= F_SPACE;
+	if (test == '+')
+		p->mask |= F_PLUS;
+	if (test == '-')
+		p->mask |= F_MINUS;
+	if (test == '0')
+		p->mask |= F_ZERO;
+	if (test == '*')
+		p->mask |= F_SHARP;
+	p->str++;
+}
+
+void	parse_type(t_printf *p, char test)
+{
+	if ()
 }
 
 int 	main(void)

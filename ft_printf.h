@@ -32,7 +32,8 @@ typedef struct	s_printf
 int		ft_printf(const char *str, ...);
 void	print_rand(t_printf *p);
 void	printf_usual(t_printf *p);
-
+void	ft_parse_optionals(t_printf *p, char test);
+void	parse_type(t_printf *p, char test);
 
 
 #endif
