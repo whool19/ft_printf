@@ -4,12 +4,12 @@
 # include "libft/libft.h"
 # include <stdarg.h>
 
-# define F_SHARP		(1 << 0)
-# define F_SPACE		(1 << 1)
-# define F_PLUS			(1 << 2)
-# define F_MINUS		(1 << 3)
-# define F_ZERO			(1 << 4)
-# define F_WILDCARD		(1 << 5)
+# define F_SHARP		(1 << 0)  //'#'
+# define F_SPACE		(1 << 1)  //' '
+# define F_PLUS			(1 << 2)  //'+'
+# define F_MINUS		(1 << 3)  //'-'
+# define F_ZERO			(1 << 4)  //'0'
+# define F_WILDCARD		(1 << 5)  //'*'
 # define F_UPCASE		(1 << 6)
 # define F_SHORT		(1 << 7)
 # define F_SHORT2		(1 << 8)
@@ -26,14 +26,19 @@ typedef struct	s_printf
 	int 		len;
 	char 		*str;
 	short		mask;
+	int         min_width;
+	int         min_accuracy;
 
 }				t_printf;
 
 int		ft_printf(const char *str, ...);
 void	print_rand(t_printf *p);
 void	printf_usual(t_printf *p);
-void	ft_parse_optionals(t_printf *p, char test);
-void	parse_type(t_printf *p, char test);
+void    ft_min_width(t_printf *p);
+void    ft_min_accuracy(t_printf *p);
+char	*ft_itoa_base(int value, int base);
+void	parse_optionals(t_printf *p, char test);
+
 
 
 #endif
