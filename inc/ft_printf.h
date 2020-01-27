@@ -18,6 +18,7 @@
 #include <string.h>
 #include "stdio.h"
 #include <limits.h>
+#include <float.h>
 
 #define FLAGS " -+#0123456789"
 #define TYPES "cspdiouxXf%"
@@ -52,13 +53,14 @@ typedef struct  s_pf
     char        *bits;
     char 		*filling;
     char 		*str_empty;
+    long double num;
+    int         flag;
 
 }               t_pf;
 
 /*
- * * ft_itoa_new.c
+ * * ft_itoa_new
  */
-long long int				ft_atoi_long_long(const char *str);
 char		                *ft_itoa_long_long(long long int n);
 unsigned long long int				ft_atoi_long_long_uns(const char *str);
 /*
@@ -73,6 +75,7 @@ int		handle_percent(t_pf *pf);
 int         ft_printf(const char *format, ...);
 int 		read_args(t_pf *pf, const char *format);
 int		print_all(t_pf *pf);
+//size_t		find_len(long long int n);
 /*
  * * ints.c
  */
@@ -113,7 +116,7 @@ int       handle_unsigned(t_pf *pf);
 /*
  * precision.c
  */
-int			find_step(long long int num);
+//int			find_step(long long int num);
 int			check_width(const char *curr, t_pf *pf);
 int 		check_precision(const char *curr, t_pf *pf);
 int			check_all_precisions(const char *curr, t_pf *pf);
@@ -131,15 +134,13 @@ t_pf 		*init_pf();
 void		upper_symb(char *str);
 int		handle_float(t_pf *pf);
 void		zero_pf(t_pf *pf);
-void		reverse(char *src, long long int num);
-size_t		find_len(long long int n);
+
 /*
  * oct_test.c
  */
 int		handle_oct(t_pf *pf);
 void		print_int_oct(t_pf *pf);
 char		*ft_itoa_long_long_uns(unsigned long long int n);
-void        free_pf(t_pf *pf);
 
 void        print_int_hex(t_pf *pf);
 #endif

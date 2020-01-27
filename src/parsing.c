@@ -80,8 +80,6 @@ int		zero_or_space_string(t_pf *pf)
         {
 		    if (pf->precision > pf->width || pf->precision == -5)
                 ft_memset(pf->str_empty,'0', pf->width);
-		    //else if (pf->zero_filling == 1 && pf->precision < pf->width && pf->precision > 0)
-                //ft_memset(pf->str_empty,'0', pf->width);
 		    else
                 ft_memset(pf->str_empty,' ', pf->width);
         }
@@ -102,28 +100,28 @@ int			check_size_flag(const char *curr, t_pf *pf)
 {
 	if (*curr == 'h' && *(curr + 1) == 'h')
 	{
-		pf->size_flag = "hh";
+		pf->size_flag = ft_strdup("hh");
 		return (2);
 	}
 	else if (*curr == 'h')
 	{
-		pf->size_flag = "h";
+		pf->size_flag = ft_strdup("h");
 		return (1);
 	}
 	else if (*curr == 'l' && *(curr +1) == 'l')
 	{
-		pf->size_flag = "ll";
+		pf->size_flag = ft_strdup("ll");
 		return (2);
 	}
 	else if (*curr == 'l')
 	{
-		pf->size_flag = "l";
+		pf->size_flag = ft_strdup("l");
 		return (1);
 	}
 	else if (*curr == 'L')
     {
-	    pf->size_flag = "L";
-	    return (1);
+        pf->size_flag = ft_strdup("L");
+        return (1);
     }
 	return (0);
 }
