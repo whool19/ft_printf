@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-t_pf 		*init_pf()
+t_pf			*init_pf(void)
 {
 	t_pf *pf;
 
 	pf = malloc(sizeof(t_pf));
 	if (!pf)
-	    return(NULL);
+		return (NULL);
 	pf->width = 0;
 	pf->printed = 0;
 	pf->align_left = 0;
@@ -28,14 +28,13 @@ t_pf 		*init_pf()
 	pf->zero_filling = 0;
 	pf->precision = -5;
 	pf->type = '\0';
-    pf->length = 0;
-    pf->size_flag = "\0";
-    pf->str_empty = "\0";
-    pf->filling = "\0";
+	pf->size_flag = "\0";
+	pf->str_empty = "\0";
+	pf->filling = "\0";
 	return (pf);
 }
 
-void		zero_pf(t_pf *pf)
+void			zero_pf(t_pf *pf)
 {
 	pf->width = 0;
 	pf->align_left = 0;
@@ -45,16 +44,15 @@ void		zero_pf(t_pf *pf)
 	pf->zero_filling = 0;
 	pf->precision = -5;
 	pf->type = '\0';
-    pf->length = 0;
-	if(ft_strequ("\0", pf->size_flag) != 1)
-	    ft_memdel((void **)&pf->size_flag);
-    if (ft_strequ("\0", pf->filling) != 1)
-        ft_memdel((void **)&pf->filling);
-    if (ft_strequ("\0", pf->str_empty) != 1)
-        ft_memdel((void **)&pf->str_empty);
+	if (ft_strequ("\0", pf->size_flag) != 1)
+		ft_memdel((void **)&pf->size_flag);
+	if (ft_strequ("\0", pf->filling) != 1)
+		ft_memdel((void **)&pf->filling);
+	if (ft_strequ("\0", pf->str_empty) != 1)
+		ft_memdel((void **)&pf->str_empty);
 }
 
-void        upper_symb(char *str)
+void			upper_symb(char *str)
 {
 	while (*str)
 	{

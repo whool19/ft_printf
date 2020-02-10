@@ -12,116 +12,84 @@
 
 #include "ft_printf.h"
 
-int 	find_types(const char *str, char *parent)
+int				find_types(const char *str, char *parent)
 {
 	char *flag;
 	char a;
 
 	a = *str;
-	flag = ft_strchr(parent, a);//TYPES
-	if (flag != NULL)//find flag
+	flag = ft_strchr(parent, a);
+	if (flag != NULL)
 		return (1);
 	return (0);
 }
 
-int		check_flags(const char *curr, t_pf *pf)
+int				check_types(const char *curr, t_pf *pf)
 {
-	if (*curr != '\0' && find_types(curr, TYPES) == 0)//проверить не начался ли тип
-	{
-		if (*curr == '-')
-		{
-			pf->align_left = 1;
-			return (check_flags((curr + 1), pf) + 1);
-		}
-		else if (*curr == '+')
-		{
-			pf->need_sign = 1;
-			return (check_flags((curr + 1), pf) + 1);
-		}
-		else if (*curr == ' ')
-		{
-			pf->need_spase = 1;
-			return (check_flags((curr + 1), pf) + 1);
-		}
-		else if (*curr == '#')
-		{
-			pf->need_format = 1;
-			return (check_flags((curr + 1), pf) + 1);
-		}
-		else if (*curr == '0')
-		{
-			pf->zero_filling = 1;
-			return (check_flags((curr + 1), pf) + 1);
-		}
-	}
-	else if (*curr == '%')
-		return (0);
-	return (0);
-}
+	char a;
 
-int 		check_types(const char *curr, t_pf *pf)
-{
-	char a = *curr;
-	if(!*curr)
-	    return (0);
+	a = *curr;
+	if (!*curr)
+		return (0);
 	if (find_types(curr, TYPES) == 1)
 		pf->type = a;
 	return (0);
 }
 
-int		zero_or_space_string(t_pf *pf)
+int				zero_or_space_string(t_pf *pf)
 {
-	pf->str_empty =ft_memalloc(sizeof(char) * (pf->width + 1));
+	pf->str_empty = ft_memalloc(sizeof(char) * (pf->width + 1));
 	if (pf->str_empty == NULL)
 		return (-1);
 	if (pf->type != '%')
 	{
-		if (pf->zero_filling == 1 && (find_types(&pf->type, INT_TYPES) == 1 && pf->align_left != 1))//и то что нет минуса и числовое значение добавить ааааа
-        {
-		    if (pf->precision > pf->width || pf->precision == -5)
-                ft_memset(pf->str_empty,'0', pf->width);
-		    else
-                ft_memset(pf->str_empty,' ', pf->width);
-        }
+		if (pf->zero_filling == 1 && (find_types(&pf->type, INT_TYPES) == 1 &&
+		pf->align_left != 1))
+		{
+			if (pf->precision > pf->width || pf->precision == -5)
+				ft_memset(pf->str_empty, '0', pf->width);
+			else
+				ft_memset(pf->str_empty, ' ', pf->width);
+		}
 		else
-			ft_memset(pf->str_empty,' ', pf->width);
+			ft_memset(pf->str_empty, ' ', pf->width);
 	}
 	else
 	{
 		if (pf->zero_filling == 1 && pf->align_left != 1)
-			ft_memset(pf->str_empty,'0', pf->width);
+			ft_memset(pf->str_empty, '0', pf->width);
 		else
-			ft_memset(pf->str_empty,' ', pf->width);
+			ft_memset(pf->str_empty, ' ', pf->width);
 	}
 	return (1);
 }
 
-int			check_size_flag(const char *curr, t_pf *pf)
+void			put_size_flag(const char *curr, t_pf *pf)
 {
 	if (*curr == 'h' && *(curr + 1) == 'h')
-	{
 		pf->size_flag = ft_strdup("hh");
-		return (2);
-	}
 	else if (*curr == 'h')
-	{
 		pf->size_flag = ft_strdup("h");
-		return (1);
-	}
-	else if (*curr == 'l' && *(curr +1) == 'l')
-	{
+	else if (*curr == 'l' && *(curr + 1) == 'l')
 		pf->size_flag = ft_strdup("ll");
-		return (2);
-	}
 	else if (*curr == 'l')
-	{
 		pf->size_flag = ft_strdup("l");
-		return (1);
-	}
 	else if (*curr == 'L')
-    {
-        pf->size_flag = ft_strdup("L");
-        return (1);
-    }
+		pf->size_flag = ft_strdup("L");
+}
+
+int				check_size_flag(const char *curr, t_pf *pf)
+{
+	put_size_flag(curr, pf);
+	if (*curr == 'h' && *(curr + 1) == 'h')
+		return (2);
+	else if (*curr == 'h')
+		return (1);
+	else if (*curr == 'l' && *(curr + 1) == 'l')
+		return (2);
+	else if (*curr == 'l')
+		return (1);
+	else if (*curr == 'L')
+		return (1);
 	return (0);
 }
